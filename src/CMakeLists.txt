@@ -10,4 +10,5 @@ file(GLOB SRC_FILES
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
-target_link_libraries(${PROJECT_NAME} ModernCppUtils)
+target_link_libraries(${PROJECT_NAME} ModernCppUtils fmt::fmt)
+target_include_directories(${PROJECT_NAME} PRIVATE "." )

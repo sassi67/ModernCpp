@@ -12,8 +12,13 @@ set(CMAKE_CXX_EXTENSIONS NO)
 
 hunter_add_package(GTest)
 hunter_add_package(benchmark)
+hunter_add_package(fmt)
+hunter_add_package(spdlog)
+
 find_package(GTest CONFIG REQUIRED)
 find_package(benchmark CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
 
 add_subdirectory(src)
 add_subdirectory(test)

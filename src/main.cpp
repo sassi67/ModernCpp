@@ -1,7 +1,8 @@
 #include <iostream>
-#include "utils/smoke.h"
+#include <utils/smoke.h>
+#include <fmt/core.h>
 
 int main(int argc, char *argv[]) {
-    std::cout << Smoke::getHello() << std::endl;
+    fmt::print(utils::Smoke::getHello());
     return 0;
 }
