@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 4.2)
 
 project(ModernCppApp C CXX)
 
@@ -10,5 +10,10 @@ file(GLOB SRC_FILES
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
-target_link_libraries(${PROJECT_NAME} ModernCppUtils fmt::fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    ModernCppUtils 
+    fmt::fmt
+    spdlog::spdlog
+)
+
 target_include_directories(${PROJECT_NAME} PRIVATE "." )

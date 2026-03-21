@@ -1,8 +1,8 @@
-#include <iostream>
 #include <utils/smoke.h>
 #include <fmt/core.h>
 
 int main(int argc, char *argv[]) {
-    fmt::print(utils::Smoke::getHello());
+    auto message = utils::Smoke::getHello();
+    fmt::print("{}", message);
     return 0;
 }
