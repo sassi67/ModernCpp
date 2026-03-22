@@ -43,7 +43,7 @@
             "generator": "Visual Studio 18 2026",
             "toolset": {
                 "strategy": "set",
-                "value": "host=x64,version=14.50"
+                "value": "version=14.50.35717"
             },
             "cacheVariables": {
                 "CMAKE_SYSTEM_VERSION": {

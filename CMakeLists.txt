@@ -39,7 +39,15 @@ if(NOT EXISTS ${VCPKG_EXEC})
 endif()
 
 if(WIN32)
-    set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "")
+    if(DEFINED CMAKE_GENERATOR_PLATFORM AND CMAKE_GENERATOR_PLATFORM)
+        if(CMAKE_GENERATOR_PLATFORM STREQUAL "Win32")
+            set(VCPKG_TARGET_TRIPLET "x86-windows" CACHE STRING "")
+        else()
+            set(VCPKG_TARGET_TRIPLET "${CMAKE_GENERATOR_PLATFORM}-windows" CACHE STRING "")
+        endif()
+    else()
+        set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "" )
+    endif()
 endif()
 
 set(MODERNCPP_DEPENDENCIES 
