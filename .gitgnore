@@ -1,4 +1,4 @@
-/.vcpkg
-/.vs
-/.vscode
-/_build
+.vcpkg/
+.vs/
+.vscode/
+_build/
