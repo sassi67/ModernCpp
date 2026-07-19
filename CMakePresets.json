@@ -119,6 +119,19 @@
                 "release"
             ],
             "toolchainFile": "${sourceDir}/cmake/windows-x86-64/toolchain.cmake"
+        },
+        {
+            "name": "windows-x86-64-clang",
+            "inherits": [
+                "windows",
+                "64-bit",
+                "debug"
+            ],
+            "toolset": {
+                "strategy": "set",
+                "value": "ClangCL"
+            },
+            "toolchainFile": "${sourceDir}/cmake/windows-x86-64-clang/toolchain.cmake"
         }
     ],
     "buildPresets": [
@@ -190,6 +203,15 @@
             "configurePreset": "windows-x86-64-release",
             "inherits": [
                 "release",
+                "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "windows-x86-64-clang",
+            "configurePreset": "windows-x86-64-clang",
+            "inherits": [
+                "debug",
                 "windows",
                 "default"
             ]
@@ -267,6 +289,15 @@
             "configurePreset": "windows-x86-64-release",
             "inherits": [
                 "release",
+                "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "windows-x86-64-clang",
+            "configurePreset": "windows-x86-64-clang",
+            "inherits": [
+                "debug",
                 "windows",
                 "default"
             ]
