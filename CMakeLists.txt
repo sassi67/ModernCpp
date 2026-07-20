@@ -48,6 +48,12 @@ if(WIN32)
     else()
         set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "" )
     endif()
+elseif(LINUX)
+    if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86")
+        set(VCPKG_TARGET_TRIPLET "x86-linux" CACHE STRING "")
+    else()
+        set(VCPKG_TARGET_TRIPLET "x64-linux" CACHE STRING "")
+    endif()
 endif()
 
 set(MODERNCPP_DEPENDENCIES 
