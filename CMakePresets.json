@@ -69,6 +69,19 @@
             }
         },
         {
+            "name": "linux",
+            "hidden": true,
+            "inherits": [
+                "default"
+            ],
+            "generator": "Unix Makefiles",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
             "name": "32-bit",
             "hidden": true,
             "architecture": {
@@ -132,6 +145,38 @@
                 "value": "ClangCL"
             },
             "toolchainFile": "${sourceDir}/cmake/windows-x86-64-clang/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "inherits": [
+                "linux",
+                "debug"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-64/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-64-release",
+            "inherits": [
+                "linux",
+                "release"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-64/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-32-debug",
+            "inherits": [
+                "linux",
+                "debug"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-32/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-32-release",
+            "inherits": [
+                "linux",
+                "release"
+            ],
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-32/toolchain.cmake"
         }
     ],
     "buildPresets": [
@@ -160,6 +205,15 @@
             "nativeToolOptions": [
                 "/property:VCToolsVersion=14.44.35207"
             ]
+        },
+        {
+            "name": "linux",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
         },
         {
             "name": "release",
@@ -213,6 +267,42 @@
             "inherits": [
                 "debug",
                 "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "configurePreset": "linux-x86-64-debug",
+            "inherits": [
+                "debug",
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-release",
+            "configurePreset": "linux-x86-64-release",
+            "inherits": [
+                "release",
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-debug",
+            "configurePreset": "linux-x86-32-debug",
+            "inherits": [
+                "debug",
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-release",
+            "configurePreset": "linux-x86-32-release",
+            "inherits": [
+                "release",
+                "linux",
                 "default"
             ]
         }
@@ -248,6 +338,15 @@
             }
         },
         {
+            "name": "linux",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
             "name": "release",
             "hidden": true,
             "configuration": "Release"
@@ -299,6 +398,42 @@
             "inherits": [
                 "debug",
                 "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-debug",
+            "configurePreset": "linux-x86-64-debug",
+            "inherits": [
+                "debug",
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-release",
+            "configurePreset": "linux-x86-64-release",
+            "inherits": [
+                "release",
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-debug",
+            "configurePreset": "linux-x86-32-debug",
+            "inherits": [
+                "debug",
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-32-release",
+            "configurePreset": "linux-x86-32-release",
+            "inherits": [
+                "release",
+                "linux",
                 "default"
             ]
         }

@@ -48,6 +48,15 @@ if(WIN32)
     else()
         set(VCPKG_TARGET_TRIPLET "x64-windows" CACHE STRING "" )
     endif()
+elseif(LINUX)
+    # CMAKE_SYSTEM_PROCESSOR isn't populated until the toolchain file runs during
+    # project(), which is too late for the vcpkg install below, so infer the
+    # target architecture from the toolchain file path instead.
+    if(CMAKE_TOOLCHAIN_FILE MATCHES "linux-x86-32")
+        set(VCPKG_TARGET_TRIPLET "x86-linux" CACHE STRING "")
+    else()
+        set(VCPKG_TARGET_TRIPLET "x64-linux" CACHE STRING "")
+    endif()
 endif()
 
 set(MODERNCPP_DEPENDENCIES 
