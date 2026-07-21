@@ -75,6 +75,19 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# --- Coverage flags (applied only when ENABLE_COVERAGE is ON) ---
+option(ENABLE_COVERAGE "Enable code coverage instrumentation" OFF)
+
+if(ENABLE_COVERAGE)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        add_compile_options(-fprofile-instr-generate -fcoverage-mapping)
+        add_link_options(-fprofile-instr-generate)
+    else()
+        message(FATAL_ERROR
+            "Coverage requires Clang/clang-cl. Current compiler: ${CMAKE_CXX_COMPILER_ID}")
+    endif()
+endif()
+
 set(GTest_DIR ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/share/gtest CACHE STRING "")
 set(fmt_DIR ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/share/fmt CACHE STRING "")
 set(spdlog_DIR ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/share/spdlog CACHE STRING "")

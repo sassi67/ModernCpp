@@ -147,6 +147,25 @@
             "toolchainFile": "${sourceDir}/cmake/windows-x86-64-clang/toolchain.cmake"
         },
         {
+            "name": "windows-x86-64-coverage",
+            "inherits": [
+                "windows",
+                "64-bit",
+                "debug"
+            ],
+            "toolset": {
+                "strategy": "set",
+                "value": "ClangCL"
+            },
+            "cacheVariables": {
+                "ENABLE_COVERAGE": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            },
+            "toolchainFile": "${sourceDir}/cmake/windows-x86-64-coverage/toolchain.cmake"
+        },
+        {
             "name": "linux-x86-64-debug",
             "inherits": [
                 "linux",
@@ -264,6 +283,15 @@
         {
             "name": "windows-x86-64-clang",
             "configurePreset": "windows-x86-64-clang",
+            "inherits": [
+                "debug",
+                "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "windows-x86-64-coverage",
+            "configurePreset": "windows-x86-64-coverage",
             "inherits": [
                 "debug",
                 "windows",
@@ -395,6 +423,15 @@
         {
             "name": "windows-x86-64-clang",
             "configurePreset": "windows-x86-64-clang",
+            "inherits": [
+                "debug",
+                "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "windows-x86-64-coverage",
+            "configurePreset": "windows-x86-64-coverage",
             "inherits": [
                 "debug",
                 "windows",
