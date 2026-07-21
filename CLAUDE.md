@@ -51,7 +51,6 @@ _build\windows-x86-64-debug\src\Debug\ModernCppApp.exe
 - **`test/`** — GTest-based tests, target/project `ModernCppTest`. Globs both `test/*.cpp` and `test/utils/*.cpp`, and links `ModernCppUtils`. `test/main.cpp` is a standard GTest `main()` running `RUN_ALL_TESTS()`. Mirror `src/utils/` layout under `test/utils/` for new utility tests (see `test/utils/smoke_test.cpp` as the existing example — one GTest `TEST` per behavior, wrapped in the same namespace as the code under test).
   - Test includes reference library headers as `<utils/smoke.h>` because `test/CMakeLists.txt` adds `test/../src` (i.e. `src/`) to the include path — so app/test code both include utils headers via the `utils/` prefix, not relative paths.
 - Because both `src/` and `src/utils/` (and `test/`) use `file(GLOB ...)`, CMake must be **re-run** (re-configure, not just rebuild) after adding or removing source files for them to be picked up — GLOB results are cached at configure time.
-- `lib/HunterGate.cmake` is a legacy/unused vestige from a prior Hunter-based dependency setup; the project now uses vcpkg exclusively.
 
 ## Notes
 
