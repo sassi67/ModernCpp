@@ -101,3 +101,39 @@ enable_testing()
 add_subdirectory(src)
 add_subdirectory(test)
 
+# --- Static analysis (windows-x86-64-static-analysis preset) ---
+# Falls back to the vendored copy in scripts/ if run-clang-tidy isn't found
+# alongside clang-tidy.exe (not every VS "C++ Clang tools for Windows"
+# component version ships the wrapper script).
+find_program(RUN_CLANG_TIDY_EXE
+    NAMES run-clang-tidy run-clang-tidy.py
+    PATHS "${CMAKE_SOURCE_DIR}/scripts"
+)
+if(RUN_CLANG_TIDY_EXE)
+    # run-clang-tidy is always a Python script (no .exe wrapper), including
+    # when it ships extension-less alongside clang-tidy.exe -- Windows can't
+    # execute that directly, so a real Python 3 interpreter is required.
+    find_package(Python3 COMPONENTS Interpreter QUIET)
+    if(Python3_EXECUTABLE)
+        set(RUN_CLANG_TIDY_COMMAND ${Python3_EXECUTABLE} ${RUN_CLANG_TIDY_EXE})
+    else()
+        message(WARNING
+            "Found ${RUN_CLANG_TIDY_EXE} but no Python 3 interpreter -- "
+            "the 'tidy' target will fail to run. Install Python 3 and ensure "
+            "it's on PATH.")
+        set(RUN_CLANG_TIDY_COMMAND ${RUN_CLANG_TIDY_EXE})
+    endif()
+    # -export-fixes points at a directory (one .yaml per file) rather than a
+    # single merged file: merging into one file requires PyYAML, which isn't
+    # a project dependency. run-clang-tidy only recognizes an *existing*
+    # directory here (its own "create if it ends in a separator" check looks
+    # for a trailing os.path.sep, i.e. "\", which a CMake "/"-style path
+    # never has on Windows), so it's created up front.
+    add_custom_target(tidy
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/tidy-fixes"
+        COMMAND ${RUN_CLANG_TIDY_COMMAND} -p "${CMAKE_BINARY_DIR}" -export-fixes "${CMAKE_BINARY_DIR}/tidy-fixes"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Running clang-tidy static analysis"
+    )
+endif()
+

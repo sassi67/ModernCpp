@@ -43,6 +43,17 @@ Run the app:
 _build\windows-x86-64-debug\src\Debug\ModernCppApp.exe
 ```
 
+### Static analysis (`windows-x86-64-static-analysis` preset)
+
+Uses Ninja + clang-cl (not the VS generator, since multi-config VS generators can't emit `compile_commands.json`) with `/W4 -Wall -Wextra -Wshadow -Wconversion` and `CMAKE_EXPORT_COMPILE_COMMANDS=ON`. A `tidy` target runs `run-clang-tidy` against the generated compilation database (falls back to the vendored copy in `scripts/run-clang-tidy.py` if it isn't on `PATH`):
+
+```powershell
+cmake --preset windows-x86-64-static-analysis
+cmake --build --preset windows-x86-64-static-analysis -t tidy
+```
+
+Fix suggestions land in `_build/windows-x86-64-static-analysis/tidy-fixes/` (one `.yaml` per file — merging into a single file needs PyYAML, which isn't a project dependency).
+
 ## Architecture
 
 - **`src/`** — the main application (`CMakeLists.txt` defines target `ModernCppApp`, project `ModernCppApp`). Sources are glob-collected (`*.cpp`/`*.h` in the directory), so **new files under `src/` are picked up automatically at the next CMake configure** — no need to edit `src/CMakeLists.txt` when adding a file there.

@@ -166,6 +166,33 @@
             "toolchainFile": "${sourceDir}/cmake/windows-x86-64-coverage/toolchain.cmake"
         },
         {
+            "name": "windows-x86-64-static-analysis",
+            "inherits": [
+                "windows",
+                "debug"
+            ],
+            "generator": "Ninja",
+            "architecture": {
+                "strategy": "external",
+                "value": "x64"
+            },
+            "toolset": {
+                "strategy": "external",
+                "value": "host=x64,version=14.50"
+            },
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": {
+                    "type": "STRING",
+                    "value": "/W4 -Wall -Wextra -Wshadow -Wconversion"
+                },
+                "CMAKE_EXPORT_COMPILE_COMMANDS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            },
+            "toolchainFile": "${sourceDir}/cmake/windows-x86-64-static-analysis/toolchain.cmake"
+        },
+        {
             "name": "linux-x86-64-debug",
             "inherits": [
                 "linux",
@@ -297,6 +324,19 @@
                 "windows",
                 "default"
             ]
+        },
+        {
+            "name": "windows-x86-64-static-analysis",
+            "configurePreset": "windows-x86-64-static-analysis",
+            "inherits": [
+                "debug",
+                "default"
+            ],
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
         },
         {
             "name": "linux-x86-64-debug",
@@ -432,6 +472,15 @@
         {
             "name": "windows-x86-64-coverage",
             "configurePreset": "windows-x86-64-coverage",
+            "inherits": [
+                "debug",
+                "windows",
+                "default"
+            ]
+        },
+        {
+            "name": "windows-x86-64-static-analysis",
+            "configurePreset": "windows-x86-64-static-analysis",
             "inherits": [
                 "debug",
                 "windows",
