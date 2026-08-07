@@ -1,12 +1,12 @@
-#ifndef _SMOKE_H_
-#define _SMOKE_H_
+#ifndef SMOKE_H_
+#define SMOKE_H_
 
 #include <string>
 
 namespace utils {
     class Smoke {
     public:
-        static std::string getHello();
+        static auto getHello() -> std::string;
     };
 }
-#endif // _SMOKE_H_
+#endif // SMOKE_H_

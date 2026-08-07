@@ -223,6 +223,24 @@
                 "release"
             ],
             "toolchainFile": "${sourceDir}/cmake/linux-x86-32/toolchain.cmake"
+        },
+        {
+            "name": "linux-x86-64-static-analysis",
+            "inherits": [
+                "linux",
+                "debug"
+            ],
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": {
+                    "type": "STRING",
+                    "value": "-Wall -Wextra -Wshadow -Wconversion"
+                },
+                "CMAKE_EXPORT_COMPILE_COMMANDS": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            },
+            "toolchainFile": "${sourceDir}/cmake/linux-x86-64-static-analysis/toolchain.cmake"
         }
     ],
     "buildPresets": [
@@ -373,6 +391,15 @@
                 "linux",
                 "default"
             ]
+        },
+        {
+            "name": "linux-x86-64-static-analysis",
+            "configurePreset": "linux-x86-64-static-analysis",
+            "inherits": [
+                "debug",
+                "linux",
+                "default"
+            ]
         }
     ],
     "testPresets": [
@@ -519,6 +546,15 @@
             "configurePreset": "linux-x86-32-release",
             "inherits": [
                 "release",
+                "linux",
+                "default"
+            ]
+        },
+        {
+            "name": "linux-x86-64-static-analysis",
+            "configurePreset": "linux-x86-64-static-analysis",
+            "inherits": [
+                "debug",
                 "linux",
                 "default"
             ]
