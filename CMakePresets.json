@@ -41,10 +41,6 @@
             "name": "vs2026",
             "hidden": true,
             "generator": "Visual Studio 18 2026",
-            "toolset": {
-                "strategy": "set",
-                "value": "version=14.50.35717"
-            },
             "cacheVariables": {
                 "CMAKE_SYSTEM_VERSION": {
                     "type": "STRING",

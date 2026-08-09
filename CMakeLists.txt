@@ -50,8 +50,9 @@ if(WIN32)
     endif()
 elseif(LINUX)
     # CMAKE_SYSTEM_PROCESSOR isn't populated until the toolchain file runs during
-    # project(), which is too late for the vcpkg install below, so infer the
-    # target architecture from the toolchain file path instead.
+    # project(), which is too late to pick the triplet vcpkg's manifest-mode
+    # install resolves against, so infer the target architecture from the
+    # toolchain file path instead.
     if(CMAKE_TOOLCHAIN_FILE MATCHES "linux-x86-32")
         set(VCPKG_TARGET_TRIPLET "x86-linux" CACHE STRING "")
     else()
@@ -59,14 +60,10 @@ elseif(LINUX)
     endif()
 endif()
 
-set(MODERNCPP_DEPENDENCIES 
-    GTest:${VCPKG_TARGET_TRIPLET} 
-    fmt:${VCPKG_TARGET_TRIPLET}
-    spdlog:${VCPKG_TARGET_TRIPLET}
-)
-
-message(STATUS "***** Checking project third party dependencies in ${VCPKG_ROOT} *****")
-execute_process(COMMAND ${VCPKG_EXEC} install ${MODERNCPP_DEPENDENCIES} WORKING_DIRECTORY ${VCPKG_ROOT})
+# Dependencies (GTest, fmt, spdlog) are declared in vcpkg.json and installed
+# automatically by the vcpkg toolchain (included below via each preset's
+# toolchain.cmake) as part of manifest-mode dependency resolution -- no
+# manual `vcpkg install` step needed.
 
 project(ModernCppRoot LANGUAGES C CXX)
 
@@ -88,10 +85,6 @@ if(ENABLE_COVERAGE)
     endif()
 endif()
 
-set(GTest_DIR ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/share/gtest CACHE STRING "")
-set(fmt_DIR ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/share/fmt CACHE STRING "")
-set(spdlog_DIR ${VCPKG_ROOT}/installed/${VCPKG_TARGET_TRIPLET}/share/spdlog CACHE STRING "")
-
 find_package(GTest CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
@@ -101,7 +94,7 @@ enable_testing()
 add_subdirectory(src)
 add_subdirectory(test)
 
-# --- Static analysis (windows-x86-64-static-analysis preset) ---
+# --- Static analysis (windows/linux -x86-64-static-analysis presets) ---
 # Falls back to the vendored copy in scripts/ if run-clang-tidy isn't found
 # alongside clang-tidy.exe (not every VS "C++ Clang tools for Windows"
 # component version ships the wrapper script).
